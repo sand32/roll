@@ -41,6 +41,10 @@ int main(int argc, char** argv)
                 ++j;
             }
             dice = atoi(chBuffer);
+            if(dice > 1000){
+                printf("Limiting dice count to 1000...");
+                dice = 1000;
+            }
 
             if(argv[i][j] == 'd'){
                 ++j;
@@ -57,6 +61,10 @@ int main(int argc, char** argv)
                 ++j;
             }
             sides = atoi(chBuffer);
+            if(sides < 1){
+                printf("Setting die sides to 1...");
+                sides = 1;
+            }
 
             switch(argv[i][j]){
                 case '+':
@@ -101,6 +109,8 @@ int main(int argc, char** argv)
     }
 
     int result = 0;
+    // even though I check the value of dice earlier, this eliminates a warning due to GCC stupidity under O2
+    if(sizeof(int) * dice > __PTRDIFF_MAX__) return 1;
     int* rolls = malloc(sizeof(int) * dice);
     int grandTotal = 0;
     if(sides > 0){
@@ -113,7 +123,7 @@ int main(int argc, char** argv)
         }
     }
 
-    if((options & 2) == 2){ // t
+    if((options & 2) == 2 && top > 0){ // t
         int i, j, tmp;
         for(int i = 1; i < dice; ++i){
             tmp = rolls[i];
