@@ -175,5 +175,11 @@ int main(int argc, char** argv)
         printf("\nTotal: ");
     }
 
-    printf("%d\n", result);
+    if(dice == 1 && modOp != -1 && rolls[0] == 1){
+        printf("%d (natural 1)\n", result);
+    }else if(dice == 1 && modOp != -1 && rolls[0] == sides){
+        printf("%d (natural %d)\n", result, sides);
+    }else{
+        printf("%d\n", result);
+    }
 }
